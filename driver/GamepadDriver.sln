@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamepadDriver", "GamepadDriver\GamepadDriver.csproj", "{B8687C18-B7F1-466F-BD9E-9D3E17FFD155}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebox", "Gamebox\Gamebox.csproj", "{D9499446-20A3-4ED7-AD7E-B7093C3868BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B8687C18-B7F1-466F-BD9E-9D3E17FFD155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8687C18-B7F1-466F-BD9E-9D3E17FFD155}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8687C18-B7F1-466F-BD9E-9D3E17FFD155}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8687C18-B7F1-466F-BD9E-9D3E17FFD155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9499446-20A3-4ED7-AD7E-B7093C3868BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9499446-20A3-4ED7-AD7E-B7093C3868BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9499446-20A3-4ED7-AD7E-B7093C3868BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9499446-20A3-4ED7-AD7E-B7093C3868BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

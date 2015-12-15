@@ -5,13 +5,15 @@ using System.Runtime.InteropServices;
 
 namespace GamepadDriver
 {
-    public abstract class GamepadBase
+    public class Gamepad
     {
-        protected Keys _currentKeys;
+        private Dictionary<Keys, char> _layout;
+        private Keys _currentKeys;
 
-        public GamepadBase()
+        public Gamepad(Dictionary<Keys, char> layout)
         {
             _currentKeys = Keys.None;
+            _layout = layout;
         }
 
         public Keys DetermineKeys(byte data)
@@ -24,7 +26,7 @@ namespace GamepadDriver
             return data == 255 ? Keys.None : (Keys)((byte)(~data));
         }
 
-        public void Handle(Keys newKeys)
+        public void Press(Keys newKeys)
         {
             // если непонятно, какие кнопки нажаты или нажатые кнопки не поменялись
             if (newKeys == _currentKeys)
@@ -41,24 +43,17 @@ namespace GamepadDriver
                     // "отпускаем" старые нажатые кнопки
                     if (newKeys.HasFlag(key))
                     {
-                        Release(key);
+                        keybd_event(VkKeyScan(_layout[key]), 0, 2, 0);
                     }
                 }
 
-                if (newKeys == (Keys.Start | Keys.Select))
-                {
-                    if (StartAndSelect != null)
-                    {
-                        StartAndSelect();
-                    }
-                }
-                else if (newKeys != Keys.None && newKeys != _currentKeys)
+                if (newKeys != Keys.None)
                 {
                     // стало что-то нажато
                     // "нажимаем" новые
                     if (newKeys.HasFlag(key))
                     {
-                        Press(key);
+                        keybd_event(VkKeyScan(_layout[key]), 0, 0, 0);
                     }
                 }
             }
@@ -67,47 +62,10 @@ namespace GamepadDriver
             _currentKeys = newKeys;
         }
 
-        public event Action StartAndSelect;
-
-        public abstract void Press(Keys key);
-
-        public abstract void Release(Keys key);
-    }
-
-    public class NesGamepad : GamepadBase
-    {
-        private enum KeyboardEvent
-        {
-            Press = 0,
-            Release = 2
-        }
-
-        private Dictionary<Keys, char> _layout;
-
-        public NesGamepad(Dictionary<Keys, char> layout) : base()
-        {
-            _layout = layout;
-        }
-
         [DllImport("user32.dll")]
         public static extern void keybd_event(uint bVk, uint bScan, long dwFlags, long dwExtraInfo);
 
         [DllImport("user32.dll")]
         public static extern uint VkKeyScan(char ch);
-
-        public override void Press(Keys key)
-        {
-            Keyboard(key, KeyboardEvent.Press);
-        }
-
-        public override void Release(Keys key)
-        {
-            Keyboard(key, KeyboardEvent.Release);
-        }
-
-        private void Keyboard(Keys key, KeyboardEvent e)
-        {
-            keybd_event(VkKeyScan(_layout[key]), 0, (int)e, 0);
-        }
     }
 }
